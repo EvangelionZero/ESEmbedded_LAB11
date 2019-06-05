@@ -33,9 +33,13 @@ start_user:
 
 .global	sys_call
 sys_call:
-	??????
+	svc #00000001
+	bx lr //call完到c的下一行
+
 
 .type svc_handler, %function
 .global svc_handler
 svc_handler:
-	??????
+	mov	r0,lr
+	b svc_handler_c	//assembler在最後面會幫svc_handler_c 加上bx lr	所以這裡不用bl
+	bx lr
